@@ -8,10 +8,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.byteworks.test.api.CITest;
 import org.byteworks.test.api.ExperimentalTest;
+import org.byteworks.test.api.TimingExtension;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -40,6 +43,23 @@ class CalculatorTests {
         void add(int first, int second, int expectedResult) {
             assertEquals(expectedResult, calculator.add(first, second),
                     () -> first + " + " + second + " should equal " + expectedResult);
+        }
+
+        @Test
+        @ExtendWith(TimingExtension.class)
+        void lazyFailureMessageCreation() {
+            Assertions.assertEquals("foo", "foo", () -> {
+                sleepAWhile(10000); return "Lazy message is not generated when test passes";
+            }
+            );
+        }
+    }
+
+    private static void sleepAWhile(int howLong) {
+        try {
+            Thread.sleep(howLong);
+        } catch(InterruptedException e) {
+
         }
     }
 
