@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import org.byteworks.test.api.ExperimentalTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Tag;
@@ -70,10 +71,9 @@ class CalculatorTests {
         }
     }
 
-    @Tag("experimental")
     @Nested
     class Trig {
-        @Test
+        @ExperimentalTest
         @DisplayName("sin")
         void sin() {
             assertEquals(-0.98803162, calculator.sin(30.0), 0.1, "Should calculate sine correctly");
