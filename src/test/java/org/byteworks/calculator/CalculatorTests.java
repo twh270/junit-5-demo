@@ -2,6 +2,7 @@ package org.byteworks.calculator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -28,5 +29,20 @@ class CalculatorTests {
         Calculator calculator = new Calculator();
         assertEquals(expectedResult, calculator.add(first, second),
                 () -> first + " + " + second + " should equal " + expectedResult);
+    }
+
+    @Test
+    @DisplayName("6 / 2 = 3")
+    void dividesTwoNumbers() {
+        Calculator calculator = new Calculator();
+        assertEquals(3, calculator.divide(6, 2), "6 / 2 should equal 3");
+    }
+
+    @Test
+    @DisplayName("6 / 0 = error")
+    void dividesByZero() {
+        Calculator calculator = new Calculator();
+        Assertions.assertThrows(ArithmeticException.class, () -> calculator.divide(6, 0),
+                "6 / 0 should throw an error");
     }
 }
