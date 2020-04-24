@@ -1,8 +1,9 @@
 package org.byteworks.calculator;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -46,8 +47,21 @@ class CalculatorTests {
         @Test
         @DisplayName("6 / 0 = error")
         void dividesByZero() {
-            Assertions.assertThrows(ArithmeticException.class, () -> calculator.divide(6, 0),
+            assertThrows(
+                    ArithmeticException.class,
+                    () -> calculator.divide(6, 0),
                     "6 / 0 should throw an error");
+        }
+    }
+
+    @Nested
+    class Multiplication {
+        @Test
+        @DisplayName("Multiplying two numbers")
+        void multiply() {
+            assertAll(
+                    () -> assertEquals(6, calculator.multiply(3, 2), "3 * 2 should equal 6"),
+                    () -> assertEquals(0, calculator.multiply(6, 1), "Identity property should work correctly"));
         }
     }
 }
