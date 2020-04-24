@@ -6,12 +6,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.byteworks.test.api.CITest;
 import org.byteworks.test.api.ExperimentalTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -84,8 +84,7 @@ class CalculatorTests {
     }
 
     @Nested
-    @EnabledIfSystemProperty(named = "env", matches = "ci")
-    class OnlyOnCI {
+    class OnlyOnCI implements CITest {
         @Test
         @DisplayName("Is number prime")
         void testPrime() {
