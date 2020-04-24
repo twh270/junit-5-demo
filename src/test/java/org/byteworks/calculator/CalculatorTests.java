@@ -2,13 +2,16 @@ package org.byteworks.calculator;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.byteworks.test.api.ExperimentalTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -77,6 +80,20 @@ class CalculatorTests {
         @DisplayName("sin")
         void sin() {
             assertEquals(-0.98803162, calculator.sin(30.0), 0.1, "Should calculate sine correctly");
+        }
+    }
+
+    @Nested
+    @EnabledIfSystemProperty(named = "env", matches = "ci")
+    class OnlyOnCI {
+        @Test
+        @DisplayName("Is number prime")
+        void testPrime() {
+            assertAll(
+                () -> assertTrue(calculator.isPrime(2_147_483_647)),
+                () -> assertTrue(calculator.isPrime(2_147_483_629)),
+                () -> assertFalse(calculator.isPrime(2_147_483_646))
+            );
         }
     }
 }
