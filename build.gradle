@@ -13,8 +13,31 @@ dependencies {
 }
 
 test {
-	useJUnitPlatform()
+	useJUnitPlatform {
+		excludeTags 'experimental'
+	}
 	testLogging {
 		events "passed", "skipped", "failed"
 	}
+}
+
+/*
+  Define a task to run experimental tests
+  gradlew test             --> runs tests that are not tagged 'experimental'
+  gradlew experimentalTest --> runs only tests that are tagged 'experimental'
+  gradlew check            --> runs 'test' followed by 'experimentalTest'
+*/
+
+tasks.create('experimentalTest', Test) {
+    useJUnitPlatform {
+        includeTags 'experimental'
+    }
+	testLogging {
+		events "passed", "skipped", "failed"
+	}
+    shouldRunAfter test
+}
+
+tasks.named("check") {
+    dependsOn experimentalTest
 }

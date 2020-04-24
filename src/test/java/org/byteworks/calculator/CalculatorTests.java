@@ -6,13 +6,16 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+@Tag("math")
 class CalculatorTests {
     private final Calculator calculator = new Calculator();
 
+    @Tag("addition")
     @Nested
     class Addition {
 
@@ -36,6 +39,7 @@ class CalculatorTests {
         }
     }
 
+    @Tag("division")
     @Nested
     class Division {
         @Test
@@ -54,6 +58,7 @@ class CalculatorTests {
         }
     }
 
+    @Tag("multiplication")
     @Nested
     class Multiplication {
         @Test
@@ -61,7 +66,17 @@ class CalculatorTests {
         void multiply() {
             assertAll(
                     () -> assertEquals(6, calculator.multiply(3, 2), "3 * 2 should equal 6"),
-                    () -> assertEquals(0, calculator.multiply(6, 1), "Identity property should work correctly"));
+                    () -> assertEquals(6, calculator.multiply(6, 1), "Identity property should work correctly"));
+        }
+    }
+
+    @Tag("experimental")
+    @Nested
+    class Trig {
+        @Test
+        @DisplayName("sin")
+        void sin() {
+            assertEquals(-0.98803162, calculator.sin(30.0), 0.1, "Should calculate sine correctly");
         }
     }
 }

@@ -14,4 +14,8 @@ public class Calculator {
         return a * b;
     }
 
+    public double sin(double a) {
+        return Math.sin(a);
+    }
+
 }
